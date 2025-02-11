@@ -1,0 +1,91 @@
+# motion module v3
+- dreambooth_path: "/home/dungnt206/workspace/code/AnimateDiff/outputs/depth_gray_20_percent/training_smth_depth_gray-2024-10-30T20-53-22/checkpoints/checkpoint-epoch-92.ckpt" #"models/DreamBooth_LoRA/realisticVisionV60B1_v51VAE.safetensors"
+  lora_model_path: ""
+
+  inference_config: "configs/inference/inference-v3.yaml"
+  motion_module: "/home/dungnt206/workspace/code/AnimateDiff/outputs/depth_gray_20_percent/training_smth_depth_gray-2024-10-30T20-53-22/checkpoints/checkpoint-epoch-92.ckpt"
+
+  seed: 42
+  steps: 25
+  guidance_scale: 8
+
+  prompt: [
+    "pushing a newspaper so that it falls off the table",
+    "moving a makeup brush away from the camera",
+    "pushing a glass so that it almost falls off but doesn't",
+    "putting red onion and lemon on the table",
+    "opening a door",
+    "taking tie",
+    "dropping binder clips next to cup",
+    "bending stick until it breaks",
+    "pulling oil bottle from left to right",
+    "tearing a leaf into two pieces",
+    "moving color pencils up",
+    "pushing glass so that it falls off the table",
+    "putting matchbox onto cigarette box",
+    "pushing key chain so that it almost falls off but doesn't",
+    "cements falling like a rock",
+    "opening a small package",
+    "uncovering a coin",
+    "holding cup in front of plate",
+    "turning the camera right while filming gold bangle",
+    "pretending to poke package of biscuits",
+    "putting toy car on the edge of jar so it is not supported and falls down",
+    "holding a grater in front of a room fan",
+    "attaching cable to mobile phone",
+    "spilling stones onto a bed",
+    "opening bottle",
+    "moving a candle closer to the fruit basket",
+    "lifting up one end of pencil without letting it drop down",
+    "burying coin in flour",
+    "paper falling like a feather or paper",
+    "covering a candle with a plastic lid",
+    "trying but failing to attach magnet to wall because it doesn't stick",
+    "putting card upright on the table, so it falls on its side",
+    "plugging mat into plugpoint but pulling it right out as you remove your hand",
+    "squeezing plastic bag",
+    "throwing marker in the air and catching it",
+    "pulling two ends of rubber band so that it gets stretched",
+    "pushing pencil from right to left",
+    "holding toothbrush over action figure",
+    "taking spectacles from table",
+    "tearing paper into two pieces",
+    "pretending to throw seagate hard disk",
+    "putting banana upright on the table, so it falls on its side",
+    "moving tomato closer to brinjal",
+    "turning a coffee mug upside down",
+    "tilting a bottle with water on it slightly so it doesn't fall down",
+    "pushing bottle so it spins",
+    "putting 3 card onto towel",
+    "pretending to pick roll of toilet paper up",
+    "touching (without moving) trunk of tree",
+    "putting a blue bucket on a surface"
+  ]
+
+  n_prompt:
+    - ""
+
+
+
+# # motion module v2
+# - dreambooth_path: "models/DreamBooth_LoRA/realisticVisionV60B1_v51VAE.safetensors"
+#   lora_model_path: ""
+
+#   inference_config: "configs/inference/inference-v2.yaml"
+#   motion_module: "models/Motion_Module/mm_sd_v15_v2.ckpt"
+
+#   seed: [8964153601421814582, 10589116295929063558, 13214918285578813247, 3460258020075528001]
+#   steps: 25
+#   guidance_scale: 8
+
+#   prompt:
+#     - "b&w photo of 42 y.o man in black clothes, bald, face, half body, body, high detailed skin, skin pores, coastline, overcast weather, wind, waves, 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3"
+#     - "close up photo of a rabbit, forest, haze, halation, bloom, dramatic atmosphere, centred, rule of thirds, 200mm 1.4f macro shot"
+#     - "photo of coastline, rocks, storm weather, wind, waves, lightning, 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3"
+#     - "night, b&w photo of old house, post apocalypse, forest, storm weather, wind, rocks, 8k uhd, dslr, soft lighting, high quality, film grain"
+
+#   n_prompt:
+#     - "semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, text, close up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck"
+#     - "semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, text, close up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck"
+#     - "blur, haze, deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, mutated hands and fingers, deformed, distorted, disfigured, poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb, floating limbs, disconnected limbs, mutation, mutated, ugly, disgusting, amputation"
+#     - "blur, haze, deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, art, mutated hands and fingers, deformed, distorted, disfigured, poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb, floating limbs, disconnected limbs, mutation, mutated, ugly, disgusting, amputation"

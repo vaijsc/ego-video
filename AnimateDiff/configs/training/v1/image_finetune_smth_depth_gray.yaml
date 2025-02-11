@@ -1,0 +1,97 @@
+image_finetune: true
+
+output_dir: "outputs/image_finetune/depth_gray"
+pretrained_model_path: "/home/dungnt206/workspace/huggingface/stable-diffusion-2-1-base" ##"models/StableDiffusion/stable-diffusion-v1-5"
+
+noise_scheduler_kwargs:
+  num_train_timesteps: 1000
+  beta_start:          0.00085
+  beta_end:            0.012
+  beta_schedule:       "scaled_linear"
+  steps_offset:        1
+  clip_sample:         false
+
+name_dataset: smth2smth
+train_data:
+  csv_path:     "/home/dungnt206/workspace/data/something_something_v2/data/labels/train_valid.json"
+  video_folder: "/home/dungnt206/workspace/data/something_something_v2/data/gray_depth-20bn-something-something-v2"
+  sample_size:  128 #256
+
+validation_data:
+  prompts: [
+    "holding bottle next to remote",
+    "moving feeding bottle down",
+    "plugging power cord into power strip",
+    "holding spoon next to bowl",
+    "holding pen next to notebook",
+    "moving a salt shaker away from a pepper shaker",
+    "pushing book so that it slightly moves",
+    "moving a fork closer to the spoon",
+    "moving an onion away from the camera",
+    "opening drawer",
+    "pushing package so that it slightly moves",
+    "approaching fuse with your camera",
+    "moving cup away from the camera",
+    "holding bitter gourd",
+    "closing trashcan",
+    "pushing hard drive so that it slightly moves",
+    "folding napkin",
+    "moving lotion down",
+    "holding fuse next to plastic cup",
+    "holding tomato next to vicks vaporub bottle",
+    "opening lincoln logs box",
+    "approaching bags with your camera",
+    "moving eyeglasses down",
+    "moving a key away from the plastic box",
+    "plugging charger into socket",
+    "holding nailpolish next to perfume bottle",
+    "moving book towards the camera",
+    "approaching mouse with your camera",
+    "moving polish away from air tight jar",
+    "holding tennis ball next to dettol bottle",
+    "moving mobile closer to laptop",
+    "folding paper towel",
+    "holding bulb",
+    "holding potato next to vicks vaporub bottle",
+    "closing box",
+    "approaching wrist watch with your camera",
+    "holding a cap next to a mask",
+    "opening bottle cap",
+    "moving doll closer to pillow",
+    "holding a pair of glasses next to a can",
+    "moving away from scissors with your camera",
+    "moving keys closer to container",
+    "approaching a hand bag with your camera",
+    "moving away from magazine with your camera",
+    "plugging micro phones into laptop",
+    "pushing stick so that it slightly moves",
+    "moving shorts away from other shorts",
+    "moving soap down",
+    "holding a pencil next to tissue box",
+    "moving away from an intercom with your camera"
+    ]
+  num_inference_steps: 25
+  guidance_scale: 8.
+
+trainable_modules:
+  - "."
+
+unet_checkpoint_path: "/home/dungnt206/workspace/code/AnimateDiff/outputs/image_finetune/gray_depth/image_finetune_smth_depth_color-2024-10-20T22-52-28/checkpoints/checkpoint-epoch-198.ckpt"
+# unet_checkpoint_path: ""
+
+learning_rate:    1.e-5
+train_batch_size: 100 ## 50
+
+max_train_epoch:      200
+max_train_steps:      -1
+checkpointing_epochs: 5
+checkpointing_steps:  -1
+
+validation_steps:       1400
+validation_steps_tuple: [200, 500]
+
+global_seed: 42
+mixed_precision_training: true
+enable_xformers_memory_efficient_attention: True
+
+is_debug: False

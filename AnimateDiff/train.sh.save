@@ -1,0 +1,22 @@
+0;1;2M32;1;2M32;2;2M32;3;2M32;6;3M32;9;4M32;13;5M32;17;7M32;22;8M32;28;10M32;40;13M32;46;14M32;51;16M32;53;16M32;60;18M32;66;19M32;66;19M32;68;20M32;68;20M32;69;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M32;70;20M0;70;20m#!/bin/bash
+set -e
+#SBATCH --job-name=animate_diff                   # Create a short name for your job
+#SBATCH --output=/lustre/scratch/client/vinai/users/dungnt206/AnimateDiff/output_file.txt
+#SBATCH --error=/lustre/scratch/client/vinai/users/dungnt206/AnimateDiff/error_file.txt
+#SBATCH --partition=research                # Choose partition
+#SBATCH --gpus=1                         # GPU count
+#SBATCH --nodes=1                        # Node count
+#SBATCH --cpus-per-gpu=16                 # CPU cores per GPU
+#SBATCH --mem=40G
+#SBATCH --nodelist=sdc2-hpc-dgx-a100-015
+#SBATCH --mail-type=begin        # send email when job begins
+#SBATCH --mail-type=end          # send email when job ends
+#SBATCH --mail-type=fail          # send email when job fails
+#SBATCH --mail-user=v.dungnt206@vinai.io
+# Your commands here
+python -c "import torch; print(torch.cuda.is_available())"
+echo 'ok'
+source /root/.bashrc
+conda activate animated
+cd /home/dungnt206/workspace/AnimateDiff/
+python torchrun --nnodes=1 --nproc_per_node=1 train.py --config configs/training/v1/image_finetune_smth_20.yaml

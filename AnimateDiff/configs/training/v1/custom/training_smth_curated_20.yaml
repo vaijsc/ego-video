@@ -1,0 +1,117 @@
+image_finetune: false
+
+output_dir: "outputs/20_percent"
+pretrained_model_path: "/home/dungnt206/workspace/huggingface/stable-diffusion-2-1-base" ##"models/StableDiffusion/stable-diffusion-v1-5"
+
+unet_additional_kwargs:
+  use_motion_module              : true
+  motion_module_resolutions      : [ 1,2,4,8 ]
+  unet_use_cross_frame_attention : false
+  unet_use_temporal_attention    : false
+
+  motion_module_type: Vanilla
+  motion_module_kwargs:
+    num_attention_heads                : 8
+    num_transformer_block              : 2 #1
+    attention_block_types              : [ "Temporal_Self", "Temporal_Self" ]
+    temporal_position_encoding         : true
+    temporal_position_encoding_max_len : 32 #24
+    temporal_attention_dim_div         : 1
+    zero_initialize                    : true
+
+noise_scheduler_kwargs:
+  num_train_timesteps: 1000
+  beta_start:          0.00085
+  beta_end:            0.012
+  beta_schedule:       "linear"
+  steps_offset:        1
+  clip_sample:         false
+
+name_dataset: smth2smth
+train_data:
+  csv_path:     "/home/dungnt206/workspace/data/something_something_v2/data/labels/train_valid_20_percent.json"
+  video_folder: "/home/dungnt206/workspace/data/something_something_v2/data/20bn-something-something-v2"
+  sample_size:     128 #256
+  sample_stride:   2
+  sample_n_frames: 32
+
+validation_data:
+  prompts: [
+    "pushing a newspaper so that it falls off the table",
+    "moving a makeup brush away from the camera",
+    "pushing a glass so that it almost falls off but doesn't",
+    "putting red onion and lemon on the table",
+    "opening a door",
+    "taking tie",
+    "dropping binder clips next to cup",
+    "bending stick until it breaks",
+    "pulling oil bottle from left to right",
+    "tearing a leaf into two pieces",
+    "moving color pencils up",
+    "pushing glass so that it falls off the table",
+    "putting matchbox onto cigarette box",
+    "pushing key chain so that it almost falls off but doesn't",
+    "cements falling like a rock",
+    "opening a small package",
+    "uncovering a coin",
+    "holding cup in front of plate",
+    "turning the camera right while filming gold bangle",
+    "pretending to poke package of biscuits",
+    "putting toy car on the edge of jar so it is not supported and falls down",
+    "holding a grater in front of a room fan",
+    "attaching cable to mobile phone",
+    "spilling stones onto a bed",
+    "opening bottle",
+    "moving a candle closer to the fruit basket",
+    "lifting up one end of pencil without letting it drop down",
+    "burying coin in flour",
+    "paper falling like a feather or paper",
+    "covering a candle with a plastic lid",
+    "trying but failing to attach magnet to wall because it doesn't stick",
+    "putting card upright on the table, so it falls on its side",
+    "plugging mat into plugpoint but pulling it right out as you remove your hand",
+    "squeezing plastic bag",
+    "throwing marker in the air and catching it",
+    "pulling two ends of rubber band so that it gets stretched",
+    "pushing pencil from right to left",
+    "holding tennis ball next to dettol bottle",
+    "taking spectacles from table",
+    "tearing paper into two pieces",
+    "pretending to throw seagate hard disk",
+    "putting banana upright on the table, so it falls on its side",
+    "moving tomato closer to brinjal",
+    "turning a coffee mug upside down",
+    "tilting a bottle with water on it slightly so it doesn't fall down",
+    "pushing bottle so it spins",
+    "putting 3 card onto towel",
+    "pretending to pick roll of toilet paper up",
+    "touching (without moving) trunk of tree",
+    "putting a blue bucket on a surface"
+]
+
+  num_inference_steps: 25
+  guidance_scale: 8.
+
+trainable_modules:
+  - "motion_modules."
+
+# unet_checkpoint_path: "" #"/home/dungnt206/workspace/code/AnimateDiff/outputs/depth_gray/training_smth_depth_gray-2024-10-23T09-25-37/checkpoints/checkpoint-epoch-18.ckpt"
+# unet_checkpoint_path: "/home/dungnt206/workspace/code/AnimateDiff/outputs/depth_gray_20_percent/training_smth_depth_gray-2024-10-30T17-53-03/checkpoints/checkpoint-epoch-1.ckpt"
+unet_checkpoint_path: "/home/dungnt206/workspace/code/AnimateDiff/outputs/20_percent/training_smth_curated_20-2024-11-21T10-33-43/checkpoints/checkpoint-epoch-4.ckpt"
+
+learning_rate:    5.e-5 ##1.e-4
+train_batch_size: 2 ## 4
+
+max_train_epoch:      100
+max_train_steps:      -1 #100
+checkpointing_epochs: 1
+checkpointing_steps:  -1 #60
+
+validation_steps:       50000 #1000 ## 500
+validation_steps_tuple: [5000, 10000] #[2, 50]
+
+global_seed: 42
+mixed_precision_training: true
+enable_xformers_memory_efficient_attention: True
+
+is_debug: False

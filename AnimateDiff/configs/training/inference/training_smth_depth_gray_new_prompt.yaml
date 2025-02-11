@@ -1,0 +1,115 @@
+image_finetune: false
+
+output_dir: "outputs/depth_gray_20_percent"
+pretrained_model_path: "/home/dungnt206/workspace/huggingface/stable-diffusion-2-1-base" ##"models/StableDiffusion/stable-diffusion-v1-5"
+
+unet_additional_kwargs:
+  use_motion_module              : true
+  motion_module_resolutions      : [ 1,2,4,8 ]
+  unet_use_cross_frame_attention : false #consider this
+  unet_use_temporal_attention    : false #consider this
+
+  motion_module_type: Vanilla
+  motion_module_kwargs:
+    num_attention_heads                : 8
+    num_transformer_block              : 1
+    attention_block_types              : [ "Temporal_Self", "Temporal_Self" ]
+    temporal_position_encoding         : true
+    temporal_position_encoding_max_len : 32 #24
+    temporal_attention_dim_div         : 1
+    zero_initialize                    : true
+
+noise_scheduler_kwargs:
+  num_train_timesteps: 1000
+  beta_start:          0.00085
+  beta_end:            0.012
+  beta_schedule:       "linear"
+  steps_offset:        1
+  clip_sample:         false
+
+name_dataset: smth2smth
+train_data:
+  csv_path:     "/home/dungnt206/workspace/data/something_something_v2/data/labels/train_valid_20_percent.json"
+  video_folder: "/home/dungnt206/workspace/data/something_something_v2/data/gray_depth-20bn-something-something-v2"
+  sample_size:     128 #256
+  sample_stride:   2
+  sample_n_frames: 32
+
+validation_data:
+  prompts:
+  - "pushing a magazine so that it falls off the chair"
+  - "moving a paintbrush away from the laptop"
+  - "pushing a mug so that it almost falls off but doesn't"
+  - "putting garlic and cucumber on the tray"
+  - "opening a window"
+  - "taking scarf"
+  - "dropping paper clips next to a laptop"
+  - "bending wire until it snaps"
+  - "pulling a water bottle from right to left"
+  - "tearing a piece of cloth into two halves"
+  - "moving pens downward"
+  - "pushing a plastic cup so that it falls off the shelf"
+  - "putting a phone onto a wallet"
+  - "pushing a book so that it almost falls off but doesn't"
+  - "rocks falling like marbles"
+  - "opening a ziplock bag"
+  - "uncovering a ring"
+  - "holding a notebook in front of a painting"
+  - "tilting the camera left while filming a wristwatch"
+  - "pretending to poke a box of chocolates"
+  - "putting a small toy onto a ledge so it is not supported and falls down"
+  - "holding a cheese grater in front of a fan"
+  - "connecting earphones to a laptop"
+  - "spilling beads onto a floor"
+  - "opening a jar lid"
+  - "moving a flower vase closer to the window"
+  - "lifting up one end of a ruler without letting it fall down"
+  - "burying a key in a bowl of rice"
+  - "leaf falling like a feather"
+  - "covering a lamp with a cloth"
+  - "trying but failing to stick a sticker on a glass surface"
+  - "putting a playing card upright on the desk, so it falls on its side"
+  - "plugging a charger into a socket but pulling it right out as you let go"
+  - "squeezing a balloon"
+  - "throwing a coin in the air and catching it"
+  - "stretching a piece of thread by pulling both ends"
+  - "pushing a ruler from left to right"
+  - "holding a hairbrush over a figurine"
+  - "taking a watch from a table"
+  - "tearing a plastic sheet into two parts"
+  - "pretending to throw an empty box"
+  - "putting an orange upright on the table, so it falls on its side"
+  - "moving a lemon closer to a pumpkin"
+  - "turning a glass bowl upside down"
+  - "tilting a soda can slightly so it doesn't fall down"
+  - "pushing a plate so it rotates"
+  - "putting 2 cards onto a notebook"
+  - "pretending to pick up a coffee mug"
+  - "touching (without moving) the handle of a door"
+  - "putting a red basket on a surface"
+
+  num_inference_steps: 25
+  guidance_scale: 8.
+
+trainable_modules:
+  - "motion_modules."
+
+# unet_checkpoint_path: "" #"/home/dungnt206/workspace/code/AnimateDiff/outputs/depth_gray/training_smth_depth_gray-2024-10-23T09-25-37/checkpoints/checkpoint-epoch-18.ckpt"
+unet_checkpoint_path: "/home/dungnt206/workspace/code/AnimateDiff/outputs/depth_gray_20_percent/training_smth_depth_gray-2024-10-30T20-53-22/checkpoints/checkpoint-epoch-92.ckpt"
+
+learning_rate:    5.e-5 ##1.e-4
+train_batch_size: 5 ## 4
+
+max_train_epoch:      -1
+max_train_steps:      1 #100
+checkpointing_epochs: -1
+checkpointing_steps:  1 #60
+
+validation_steps:       1 ## 500
+validation_steps_tuple: [1, 1] #[2, 50]
+
+global_seed: 585858
+mixed_precision_training: true
+enable_xformers_memory_efficient_attention: True
+
+is_debug: False
