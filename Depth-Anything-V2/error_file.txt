@@ -1,0 +1,1 @@
+python: can't open file '/lustre/scratch/client/vinai/users/dungnt206/code/AnimateDiff/run_video.py': [Errno 2] No such file or directory
